@@ -459,9 +459,7 @@ public class DxfEntitiesParse {
                 // 多段线闭合
                 str = lineList.get(++i).trim();
                 // 多段线的标志，表明这是一个闭合的多段线
-                if (str.equals(PolyLineConstant.POLYLINE_LOGIC_CLOSE)) {
-                    polyLine.setLogicClose(true);
-                } else if (str.equals(PolyLineConstant.POLYLINE_LOGIC_CLOSE_1)) {
+                if (str.equals(PolyLineConstant.POLYLINE_LOGIC_CLOSE) || str.equals(PolyLineConstant.POLYLINE_LOGIC_CLOSE_1)) {
                     polyLine.setLogicClose(true);
                 }
             } else if (PolyLineEnum.BLOCK.getCode().equals(str)) {
@@ -469,37 +467,33 @@ public class DxfEntitiesParse {
                 if (PolyLineEnum.VERTEX_NAME.getCode().equals(str)) {
                     GeometricVertex vertex = new GeometricVertex();
                     //顶点的x坐标
-                    while (!PolyLineEnum.COORDINATE_X.getCode().equals(str)) {
+                    while (true) {
                         str = lineList.get(++i).trim();
-                    }
-                    if (PolyLineEnum.COORDINATE_X.getCode().equals(str)) {
-                        str = lineList.get(++i).trim();
-                        if (DecimalCheckUtil.check(str.trim())) {
-                            vertex.setX(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
+                        if (PolyLineEnum.COORDINATE_X.getCode().equals(str)) {
                             str = lineList.get(++i).trim();
-                        } else {
+                            if (DecimalCheckUtil.check(str.trim())) {
+                                vertex.setX(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
+                            }
+                        } else if (PolyLineEnum.COORDINATE_Y.getCode().equals(str)) {
+                            str = lineList.get(++i).trim();
+                            if (DecimalCheckUtil.check(str.trim())) {
+                                vertex.setY(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
+                            }
+                            vertices.add(vertex);
+                        } else if (PolyLineEnum.COORDINATE_Z.getCode().equals(str)) {
+                            str = lineList.get(++i).trim();
+                            if (DecimalCheckUtil.check(str.trim())) {
+                                vertex.setZ(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
+                            }
+                            vertices.add(vertex);
+                        } else if (PolyLineEnum.BLOCK.getCode().equals(str)) {
                             break;
+                        } else {
+                            ++i;
                         }
                     }
-                    //顶点的y坐标
-                    if (PolyLineEnum.COORDINATE_Y.getCode().equals(str)) {
-                        str = lineList.get(++i).trim();
-                        if (DecimalCheckUtil.check(str.trim())) {
-                            vertex.setY(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
-                            str = lineList.get(++i).trim();
-                        }
-                        vertices.add(vertex);
-                    }
-
-                    //顶点的z坐标
-                    if (PolyLineEnum.COORDINATE_Z.getCode().equals(str)) {
-                        str = lineList.get(++i).trim();
-                        if (DecimalCheckUtil.check(str.trim())) {
-                            vertex.setZ(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
-                            str = lineList.get(++i).trim();
-                        }
-                        vertices.add(vertex);
-                    }
+                    vertices.add(vertex);
+                    --i;
                 } else if (PolyLineEnum.SEQEND.getCode().equals(str)) {
                     break;
                 }
