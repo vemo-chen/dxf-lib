@@ -5,6 +5,7 @@ import com.dxf.generate.model.BaseDxfEntity;
 import com.dxf.generate.utils.DxfLineBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * 多段线图元
  */
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @Data
 public class DxfLwPolyLine extends BaseDxfEntity {
