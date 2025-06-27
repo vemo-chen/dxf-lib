@@ -63,7 +63,6 @@ public class DxfUtil {
         return (color.getRed() << 16) + (color.getGreen() << 8) + color.getBlue();
     }
 
-
     /**
      * 将整数的颜色值，转为16进制 类似html16进制颜色表示形式
      *
@@ -79,16 +78,7 @@ public class DxfUtil {
             hexString.insert(0, "0");
         }
 
-        // 提取透明度和颜色值的部分
-        String alpha = hexString.substring(0, 2);
-        String blue = hexString.substring(2, 4);
-        String green = hexString.substring(4, 6);
-        String red = hexString.substring(6);
-
-        // 组合为KML的RGBA格式
-        String kmlColor = alpha + blue + green + red;
-
-        return kmlColor.toUpperCase();
+        return "#" + hexString.toString().toUpperCase();
     }
 
 }

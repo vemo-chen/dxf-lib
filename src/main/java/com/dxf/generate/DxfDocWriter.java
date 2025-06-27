@@ -40,7 +40,7 @@ public class DxfDocWriter implements Closeable {
     /**
      * 空的DXF文件模板路径
      */
-    public static final String DEFAULT_EMPTY_DXF_PATH = "dxf/empty.dxf";
+    public static final String DEFAULT_EMPTY_DXF_PATH = "dxf/empty2018.dxf";
     private static final Logger log = Logger.getLogger(DxfDocWriter.class.getName());
     private List<String> entityNoReducePart = Arrays.asList(DEFAULT_ENTITY_NO_REDUCE_PART);
     private final List<DxfEntity> newDxfEntityList;
