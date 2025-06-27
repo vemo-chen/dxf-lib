@@ -1,17 +1,16 @@
 package cn.kkdlk.dxf;
 
-import cn.kkdlk.generate.dxf.DxfDocWriter;
-import cn.kkdlk.generate.dxf.Vector3;
-import cn.kkdlk.generate.dxf.model.entities.*;
+import com.dxf.generate.DxfDocWriter;
+import com.dxf.generate.model.Vector3;
+import com.dxf.generate.model.entities.*;
 import org.junit.Test;
 
-import java.awt.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author ytzjj
+ * @Author vemo
  * @DateTime 2023/11/27 16:44
  * @Description 生成dxf
  */

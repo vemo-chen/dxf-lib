@@ -17,8 +17,8 @@
 
     <developers>
         <developer>
-            <name>kkdlk</name>
-            <email>1161493927@qq.com</email>
+            <name>chenyisheng</name>
+            <email>bayoddnnl@gmail.com</email>
         </developer>
     </developers>
 
@@ -47,18 +47,7 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-        <!--定位点转换-->
-        <dependency>
-            <groupId>org.locationtech.proj4j</groupId>
-            <artifactId>proj4j</artifactId>
-            <version>${proj4j.version}</version>
-        </dependency>
-        <!--java kml解析-->
-        <dependency>
-            <groupId>de.micromata.jak</groupId>
-            <artifactId>JavaAPIforKml</artifactId>
-            <version>${java-api-kml.version}</version>
-        </dependency>
+
         <!--fastjson-->
         <dependency>
             <groupId>com.alibaba</groupId>
