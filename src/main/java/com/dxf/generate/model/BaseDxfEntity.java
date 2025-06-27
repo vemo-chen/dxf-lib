@@ -30,7 +30,7 @@ public abstract class BaseDxfEntity implements DxfEntity {
     /**
      * 线宽
      */
-    protected LineWidthEnum lineWidth = LineWidthEnum.LW_0;
+    protected Integer lineWidth = 1;
     /**
      * 是否填充
      */
@@ -51,21 +51,37 @@ public abstract class BaseDxfEntity implements DxfEntity {
      * 标高
      */
     protected Double height = 0.0;
+    /**
+     * 标高
+     */
+    protected String layerName = "0";
+
+    /**
+     * 关联的对象
+     */
+    protected String reactors;
+
 
     @Override
     public String getDxfStr() {
-        return DxfLineBuilder.build(getEntityName())
+        DxfLineBuilder dxfStr = DxfLineBuilder.build(getEntityName())
                 .append(5, DxfUtil.formatMeta(meta))
-                .append(330, "1F")
-                .append(100, "AcDbEntity")
-                .append(8, "0")
+                .append(330, "1F");
+        if (reactors != null) {
+            dxfStr.append(102, "{ACAD_REACTORS")
+                    .append(330, reactors)
+                    .append(102, "}");
+        }
+        dxfStr.append(100, "AcDbEntity")
+                .append(8, layerName)
                 .append(420, DxfUtil.formatDxfColor(color))
                 .append(440, alpha)
-                .append(370, lineWidth.getCode())
+                .append(370, lineWidth * 10)
                 .append(100, getEntityClassName())
                 .append(38, height)
-                .append(getChildDxfStr())
-                .toString();
+                .append(getChildDxfStr());
+
+        return dxfStr.toString();
     }
 
     /**

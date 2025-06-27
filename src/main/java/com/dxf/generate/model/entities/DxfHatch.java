@@ -13,12 +13,12 @@ public class DxfHatch extends BaseDxfEntity {
 
     private DxfSolid dxfSolid;
 
-    public static DxfHatch buildHatchBy(BaseDxfEntity dxfCircle) {
+    public static DxfHatch buildHatchBy(BaseDxfEntity baseDxfEntity) {
         DxfHatch dxfHatch = new DxfHatch();
         dxfHatch.dxfSolid = new DxfSolid();
-        dxfHatch.dxfSolid.setDxfEntity(dxfCircle);
-        dxfHatch.color = dxfCircle.getSolidColor() == null ? dxfCircle.getColor() : dxfCircle.getSolidColor();
-        dxfHatch.alpha = dxfCircle.getSolidAlpha();
+        dxfHatch.dxfSolid.setDxfEntity(baseDxfEntity);
+        dxfHatch.color = baseDxfEntity.getSolidColor() == null ? baseDxfEntity.getColor() : baseDxfEntity.getSolidColor();
+        dxfHatch.alpha = baseDxfEntity.getSolidAlpha();
         return dxfHatch;
     }
 
