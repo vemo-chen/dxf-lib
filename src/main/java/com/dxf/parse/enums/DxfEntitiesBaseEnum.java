@@ -34,6 +34,8 @@ public enum DxfEntitiesBaseEnum {
     EXP_FLAG("{ACAD_REACTORS", "{ACAD_XDICTIONARY”表示扩展词典组的开始。"),
 
     RECORD_ID("330", "所有者 BLOCK_RECORD 对象的软指针 ID/句柄"),
+
+    ALPHA_2("1071", "图形透明度"),
     ;
 
     /**

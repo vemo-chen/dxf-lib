@@ -41,4 +41,18 @@ public interface DxfEntity {
      */
     String getEntityClassName();
 
+    /**
+     * 设置关联句柄
+     *
+     * @param reactors 关联句柄
+     */
+    void setReactors(String reactors);
+
+    /**
+     * 获取图层名
+     *
+     * @return 图层名
+     */
+    String getLayerName();
+
 }

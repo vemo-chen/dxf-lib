@@ -1,12 +1,12 @@
 package com.dxf.generate;
 
-import com.dxf.generate.model.Vector3;
 import com.dxf.generate.model.BaseDxfEntity;
 import com.dxf.generate.model.DxfEntity;
+import com.dxf.generate.model.Vector3;
+import com.dxf.generate.model.entities.*;
 import com.dxf.generate.utils.DxfUtil;
 import com.dxf.generate.utils.StreamUtil;
 import com.dxf.generate.utils.StringUtil;
-import com.dxf.generate.model.entities.*;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -44,6 +44,7 @@ public class DxfDocWriter implements Closeable {
     private static final Logger log = Logger.getLogger(DxfDocWriter.class.getName());
     private List<String> entityNoReducePart = Arrays.asList(DEFAULT_ENTITY_NO_REDUCE_PART);
     private final List<DxfEntity> newDxfEntityList;
+    private final List<DxfEntity> newDxfLayerList;
     private long maxMeta;
     private final Charset charset;
 
@@ -69,6 +70,7 @@ public class DxfDocWriter implements Closeable {
     public DxfDocWriter(String dxfFilePath, Charset charset) {
         this.charset = charset;
         newDxfEntityList = new ArrayList<>();
+        newDxfLayerList = new ArrayList<>();
         if (dxfFilePath != null) {
             this.dxfFile = new File(dxfFilePath);
             try {
@@ -78,7 +80,7 @@ public class DxfDocWriter implements Closeable {
             }
             maxMeta = DxfUtil.readMaxMeta(dxfFilePath);
         } else {
-            maxMeta = Long.parseLong("1F6", 16);
+            maxMeta = Long.parseLong("2A4", 16);
         }
     }
 
@@ -109,11 +111,16 @@ public class DxfDocWriter implements Closeable {
                 return;
             }
         }
-        dxfEntity.setMeta(++maxMeta);
+
+        if (dxfEntity.getMeta() == null) {
+            dxfEntity.setMeta(++maxMeta);
+        }
         this.newDxfEntityList.add(dxfEntity);
         if (dxfEntity instanceof DxfCircle || dxfEntity instanceof DxfLwPolyLine) {
             if (((BaseDxfEntity) dxfEntity).isSolid()) {
-                addEntity(DxfHatch.buildHatchBy((BaseDxfEntity) dxfEntity));
+                DxfHatch dxfHatch = DxfHatch.buildHatchBy((BaseDxfEntity) dxfEntity, ++maxMeta);
+                addEntity(dxfHatch);
+                dxfEntity.setReactors(DxfUtil.formatMeta(dxfHatch.getMeta()));
             }
         }
     }
@@ -121,9 +128,32 @@ public class DxfDocWriter implements Closeable {
     /**
      * 添加实体
      **/
-    public void addEntity(List<DxfEntity> dxfEntitys) {
-        for (DxfEntity entity : dxfEntitys) {
+    public void addEntity(List<DxfEntity> dxfEntityList) {
+        for (DxfEntity entity : dxfEntityList) {
             addEntity(entity);
+        }
+    }
+
+    /**
+     * 添加一个自定义的图层
+     * <p>
+     * 图层的句柄值会自动生成，如果图层中没有设置句柄值，那么会自动设置为当前最大句柄值+1
+     *
+     * @param dxfEntity 图层
+     */
+    public void addLayer(DxfEntity dxfEntity) {
+        dxfEntity.setMeta(++maxMeta);
+        this.newDxfLayerList.add(dxfEntity);
+    }
+
+    /**
+     * 添加图层
+     *
+     * @param dxfEntityList 图层列表
+     */
+    public void addLayer(List<DxfEntity> dxfEntityList) {
+        for (DxfEntity entity : dxfEntityList) {
+            addLayer(entity);
         }
     }
 
@@ -275,8 +305,12 @@ public class DxfDocWriter implements Closeable {
                 StringUtil.appendLnCrLf(writeBuffer, nextPairTitleTag);
                 handEntities(writeBuffer, containNewEntity);
                 break;
-            case "CLASSES":
             case "TABLES":
+                StringUtil.appendLnCrLf(writeBuffer, pair);
+                StringUtil.appendLnCrLf(writeBuffer, nextPairTitleTag);
+                handTables(writeBuffer);
+                break;
+            case "CLASSES":
             case "BLOCKS":
             case "OBJECTS":
                 StringUtil.appendLnCrLf(writeBuffer, pair);
@@ -305,12 +339,12 @@ public class DxfDocWriter implements Closeable {
     private void justOutput(StringBuffer writeBuffer) throws IOException {
         log.info("part keep raw info");
         while (true) {
-            String[] piar = StreamUtil.readNextPair(br);
-            if (piar == null) {
+            String[] pair = StreamUtil.readNextPair(br);
+            if (pair == null) {
                 break;
             }
-            StringUtil.appendLnCrLf(writeBuffer, piar);
-            if ("ENDSEC".equals(piar[1].trim())) {
+            StringUtil.appendLnCrLf(writeBuffer, pair);
+            if ("ENDSEC".equals(pair[1].trim())) {
                 // header end, endsec is the end tag
                 break;
             }
@@ -399,6 +433,41 @@ public class DxfDocWriter implements Closeable {
                 // header end, endsec is the end tag
                 break;
             }
+        }
+    }
+
+    private void handTables(StringBuffer writeBuffer) throws IOException {
+        while (true) {
+            String[] pair = StreamUtil.readNextPair(br);
+            if (pair == null) {
+                break;
+            }
+            StringUtil.appendLnCrLf(writeBuffer, pair);
+            if ("2".equals(pair[0].trim()) && "LAYER".equals(pair[1].trim())) {
+                while (true) {
+                    String[] layerPair = StreamUtil.readNextPair(br);
+                    if (layerPair == null) {
+                        break;
+                    }
+                    if ("0".equals(layerPair[0].trim()) && "ENDTAB".equals(layerPair[1].trim())) {
+                        appendNewLayer(writeBuffer);
+                        // layer end
+                        StringUtil.appendLnCrLf(writeBuffer, layerPair);
+                        break;
+                    }
+                    StringUtil.appendLnCrLf(writeBuffer, layerPair);
+                }
+            }
+            if ("ENDSEC".equals(pair[1].trim())) {
+                // header end, endsec is the end tag
+                break;
+            }
+        }
+    }
+
+    private void appendNewLayer(StringBuffer buffer) {
+        for (DxfEntity dxfEntity : newDxfLayerList) {
+            buffer.append(dxfEntity.getDxfStr());
         }
     }
 

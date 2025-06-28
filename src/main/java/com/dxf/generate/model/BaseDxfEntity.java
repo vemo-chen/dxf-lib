@@ -4,6 +4,7 @@ import com.dxf.generate.enums.LineWidthEnum;
 import com.dxf.generate.model.entities.Color;
 import com.dxf.generate.utils.DxfLineBuilder;
 import com.dxf.generate.utils.DxfUtil;
+import com.dxf.parse.utils.PropertiesParse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +31,7 @@ public abstract class BaseDxfEntity implements DxfEntity {
     /**
      * 线宽
      */
-    protected LineWidthEnum lineWidth = LineWidthEnum.LW_0;
+    protected LineWidthEnum lineWidth = LineWidthEnum.LW_9;
     /**
      * 是否填充
      */
@@ -51,21 +52,37 @@ public abstract class BaseDxfEntity implements DxfEntity {
      * 标高
      */
     protected Double height = 0.0;
+    /**
+     * 关联的对象
+     */
+    private String reactors;
+    /**
+     * dxf 对象图层名称
+     */
+    private String layerName;
 
     @Override
     public String getDxfStr() {
-        return DxfLineBuilder.build(getEntityName())
-                .append(5, DxfUtil.formatMeta(meta))
-                .append(330, "1F")
+        DxfLineBuilder dxfBuilder = DxfLineBuilder.build(getEntityName())
+                .append(5, DxfUtil.formatMeta(meta));
+
+        if (reactors != null){
+            dxfBuilder.append(102, "{ACAD_REACTORS")
+                    .append(330, reactors)
+                    .append(102, "}");
+        }
+
+        dxfBuilder.append(330, "1F")
                 .append(100, "AcDbEntity")
-                .append(8, "0")
-                .append(420, DxfUtil.formatDxfColor(color))
-                .append(440, alpha)
+                .append(8, layerName == null ? "0" : layerName)
+                .append(420, PropertiesParse.formatDxfColor(color))
+                .append(440, PropertiesParse.parseToCadAlpha(alpha))
                 .append(370, lineWidth.getCode())
                 .append(100, getEntityClassName())
                 .append(38, height)
-                .append(getChildDxfStr())
-                .toString();
+                .append(getChildDxfStr());
+
+        return dxfBuilder.toString();
     }
 
     /**

@@ -1,6 +1,7 @@
 package cn.kkdlk.dxf;
 
 import com.dxf.generate.DxfDocWriter;
+import com.dxf.generate.enums.LineWidthEnum;
 import com.dxf.generate.model.Vector3;
 import com.dxf.generate.model.entities.*;
 import org.junit.Test;
@@ -16,17 +17,38 @@ import java.util.List;
  */
 public class GemerateDxf {
 
-    String url = "E:\\test\\te223st.dxf";
+    String url = "C:\\Users\\bayod\\Documents\\dxf\\writeTest1.dxf";
 
     @Test
     public void testWrite() {
         DxfDocWriter dxfDocWriter = new DxfDocWriter();
-        Color color = new Color(255, 255, 255);
+        Color color = new Color(255, 0, 0);
+
+        // 创建点
+        DxfPoint dxfPoint = new DxfPoint();
+        dxfPoint.setPoint(new Vector3(300.00, 300.0, 300.0));
+        dxfPoint.setHeight(300D);
+        dxfPoint.setColor(color);
+        dxfPoint.setAlpha(22);
+        dxfPoint.setLayerName("ly1");
+        dxfPoint.setLineWidth(LineWidthEnum.LW_5);
+        dxfDocWriter.addEntity(dxfPoint);
+
+
+        // 创建线段
+        DxfLine dxfLine = new DxfLine();
+        dxfLine.setStartPoint(100, 400, 0);
+        dxfLine.setEndPoint(500, 400, 0);
+        dxfLine.setColor(color);
+        dxfLine.setAlpha(22);
+        dxfLine.setLineWidth(LineWidthEnum.LW_13);
+        dxfLine.setLayerName("ly2");
+        dxfDocWriter.addEntity(dxfLine);
 
         // 创建多段线实体
         DxfLwPolyLine dxfLwPolyLine = new DxfLwPolyLine();
-        java.util.List<java.util.List<Double>> points = new ArrayList<>();
-        List<Double> point = new ArrayList();
+        List<List<Double>> points = new ArrayList<>();
+        List<Double> point = new ArrayList<>();
         double x = 100;
         double y = 100;
         double z = 100;
@@ -34,97 +56,79 @@ public class GemerateDxf {
         point.add(y);
         point.add(z);
         points.add(point);
-        dxfLwPolyLine.setHeight(100D);
 
-        x = 1000;
-        y = 1000;
+        x = 300;
+        y = 100;
         z = 1000;
-        point = new ArrayList();
+        point = new ArrayList<>();
         point.add(x);
         point.add(y);
         point.add(z);
         points.add(point);
-        dxfLwPolyLine.setColor(color);
 
-        x = 1100;
-        y = 3000;
+        x = 200;
+        y = 200;
         z = 2500;
-        point = new ArrayList();
+        point = new ArrayList<>();
         point.add(x);
         point.add(y);
         point.add(z);
         points.add(point);
         dxfLwPolyLine.addPoints(points);
+
+        dxfLwPolyLine.setHeight(100D);
+        dxfLwPolyLine.setColor(color);
         dxfLwPolyLine.setClose(true);
-        dxfLwPolyLine.setAlpha(100);
+        dxfLwPolyLine.setAlpha(44);
         dxfLwPolyLine.setSolid(true);
-        dxfLwPolyLine.setSolidColor(color);
+        dxfLwPolyLine.setSolidColor(new Color(0, 255, 0));
+        dxfLwPolyLine.setSolidAlpha(55);
+        dxfLwPolyLine.setLayerName("ly1");
+        dxfLwPolyLine.setLineWidth(LineWidthEnum.LW_9);
         dxfDocWriter.addEntity(dxfLwPolyLine);
 
-        // 创建圆弧
-        DxfArc dxfArc = new DxfArc();
 
-        dxfArc.setColor(color);
-        dxfArc.setHeight(200D);
-        dxfArc.setStartAngle(10);
-        dxfArc.setEndAngel(160.0);
-        dxfArc.setCenter(new Vector3(200.0, 100.0, 0.0));
-        dxfArc.setRadius(new BigDecimal(200));
-        dxfDocWriter.addEntity(dxfArc);
+        // 创建多段线实体
+        DxfLwPolyLine dxfLwPolyLine2 = new DxfLwPolyLine();
+        List<List<Double>> points2 = new ArrayList<>();
+        List<Double> point2 = new ArrayList<>();
+        double x2 = 400;
+        double y2 = 100;
+        double z2 = 100;
+        point2.add(x2);
+        point2.add(y2);
+        point2.add(z2);
+        points2.add(point2);
 
-        // 创建圆
-        DxfCircle dxfCircle = new DxfCircle();
+        x2 = 600;
+        y2 = 100;
+        z2 = 1000;
+        point2 = new ArrayList<>();
+        point2.add(x2);
+        point2.add(y2);
+        point2.add(z2);
+        points2.add(point2);
 
-        dxfCircle.setColor(new Color(100, 10, 150));
-        dxfCircle.setHeight(300D);
-        dxfCircle.setCenter(new Vector3(100.00, 100.00, 0.0));
-        dxfCircle.setRadius(new BigDecimal(100));
-        dxfCircle.setSolid(true);
-        dxfCircle.setAlpha(100);
-        dxfCircle.setSolidColor(new Color(100, 60, 70));
-        dxfDocWriter.addEntity(dxfCircle);
+        x2 = 500;
+        y2 = 200;
+        z2 = 2500;
+        point2 = new ArrayList<>();
+        point2.add(x2);
+        point2.add(y2);
+        point2.add(z2);
+        points2.add(point2);
+        dxfLwPolyLine2.addPoints(points2);
 
-        // 创建点
-        DxfPoint dxfPoint = new DxfPoint();
-        dxfPoint.setPoint(new Vector3(300.00, 300.0, 300.0));
-        dxfPoint.setHeight(300D);
-        dxfPoint.setColor(color);
-        dxfDocWriter.addEntity(dxfPoint);
-
-        // 创建文本
-        DxfText dxfText = new DxfText();
-
-        dxfText.setStartPoint(100, 200, 300);
-        dxfText.setText("1234");
-        dxfText.setColor(color);
-        dxfText.setHigh(30);
-        dxfText.setAlpha(100);
-        dxfText.setSolidAlpha(50);
-
-        dxfDocWriter.addEntity(dxfText);
-
-        // 创建椭圆
-        DxfEllipse dxfEllipse = new DxfEllipse();
-        dxfEllipse.setClose(true);
-        dxfEllipse.setColor(color);
-        dxfEllipse.setCenterPoint(200, 200, 0);
-        dxfEllipse.setMajorAxisPoint(600, 200, 0);
-        dxfEllipse.setShortAxisScale(0.5);
-        dxfDocWriter.addEntity(dxfEllipse);
-
-        // 创建线段
-        DxfLine dxfLine = new DxfLine();
-        dxfLine.setStartPoint(1000, 1000, 0);
-        dxfLine.setEndPoint(2000, 2000, 0);
-        dxfLine.setColor(color);
-        dxfDocWriter.addEntity(dxfLine);
-
-        // 创建射线
-        DxfRay dxfRay = new DxfRay();
-        dxfRay.setStart(-100, -100, 0);
-        dxfRay.setDirection(-200, -200, 0);
-        dxfRay.setColor(color);
-        dxfDocWriter.addEntity(dxfRay);
+        dxfLwPolyLine2.setHeight(100D);
+        dxfLwPolyLine2.setColor(color);
+        dxfLwPolyLine2.setClose(false);
+        dxfLwPolyLine2.setAlpha(44);
+        dxfLwPolyLine2.setSolid(false);
+        dxfLwPolyLine2.setSolidColor(new Color(0, 255, 0));
+        dxfLwPolyLine2.setSolidAlpha(55);
+        dxfLwPolyLine.setLayerName("ly1");
+        dxfLwPolyLine2.setLineWidth(LineWidthEnum.LW_9);
+        dxfDocWriter.addEntity(dxfLwPolyLine2);
 
         dxfDocWriter.save(url, true);
     }

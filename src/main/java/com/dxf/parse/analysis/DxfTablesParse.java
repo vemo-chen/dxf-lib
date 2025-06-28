@@ -31,10 +31,13 @@ public class DxfTablesParse {
                 layer.setName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                layer.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                layer.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 layer.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
+            } else if (DxfEntitiesBaseEnum.ALPHA_2.getCode().equals(str)) {
+                str = lineList.get(++i).trim();
+                layer.setAlpha(PropertiesParse.parseAlpha(str));
             } else if (DxfEntitiesBaseEnum.ALPHA.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 layer.setAlpha(PropertiesParse.parseAlpha(str));

@@ -50,7 +50,7 @@ public class DxfEntitiesParse {
                 point.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                point.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                point.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 point.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -121,7 +121,7 @@ public class DxfEntitiesParse {
                 text.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                text.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                text.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 text.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -215,7 +215,7 @@ public class DxfEntitiesParse {
                 text.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                text.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                text.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 text.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -303,7 +303,7 @@ public class DxfEntitiesParse {
                 polyLine.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                polyLine.setBorderColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                polyLine.setBorderColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 polyLine.setBorderColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -392,7 +392,7 @@ public class DxfEntitiesParse {
                 hatch.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                hatch.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                hatch.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 hatch.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -442,7 +442,7 @@ public class DxfEntitiesParse {
                 polyLine.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                polyLine.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                polyLine.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 polyLine.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -529,7 +529,7 @@ public class DxfEntitiesParse {
                 line.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                line.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                line.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 line.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -624,7 +624,7 @@ public class DxfEntitiesParse {
                 circle.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                circle.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                circle.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 circle.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -706,7 +706,7 @@ public class DxfEntitiesParse {
                 point.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                point.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                point.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 point.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -777,7 +777,7 @@ public class DxfEntitiesParse {
                 arc.setLayerName(str);
             } else if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
-                arc.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
+                arc.setColor(PropertiesParse.convertToHtmlColor(Integer.parseInt(str)));
             } else if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
                 str = lineList.get(++i).trim();
                 arc.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
@@ -865,39 +865,4 @@ public class DxfEntitiesParse {
         return i;
     }
 
-
-    /**
-     * 获取矢量图形的基本信息
-     *
-     * @param i
-     * @param lineList
-     * @param str
-     * @param geomertic
-     * @return
-     */
-    public static int getGeometricBase(int i, List<String> lineList, String str, GeometricModel geomertic) {
-        if (DxfEntitiesBaseEnum.COLOR_16.getCode().equals(str)) {
-            str = lineList.get(++i).trim();
-            geomertic.setColor(DxfUtil.convertToHtmlColor(Integer.parseInt(str)));
-        }
-
-        if (DxfEntitiesBaseEnum.COLOR_CODE.getCode().equals(str)) {
-            str = lineList.get(++i).trim();
-            geomertic.setColor(PropertiesParse.parseCadColorToHexColorCode(str));
-        }
-
-        if (DxfEntitiesBaseEnum.ALPHA.getCode().equals(str)) {
-            str = lineList.get(++i).trim();
-            geomertic.setAlpha(PropertiesParse.parseAlpha(str));
-        }
-        if (DxfEntitiesBaseEnum.LINE_WIDTH.getCode().equals(str)) {
-            str = lineList.get(++i).trim();
-            geomertic.setLineWidth(PropertiesParse.parseWeight(str));
-        }
-        if (DxfEntitiesBaseEnum.HEIGHT.getCode().equals(str)) {
-            str = lineList.get(++i).trim();
-            geomertic.setHeight(Double.parseDouble(str));
-        }
-        return i;
-    }
 }

@@ -50,35 +50,7 @@ public class DxfUtil {
         return maxMeta;
     }
 
-    /**
-     * 格式颜色为DXF类型，大小写颜色十六进制代码为整数
-     *
-     * @param color
-     * @return
-     */
-    public static int formatDxfColor(Color color) {
-        if (color == null) {
-            color = Color.BLACK;
-        }
-        return (color.getRed() << 16) + (color.getGreen() << 8) + color.getBlue();
-    }
 
-    /**
-     * 将整数的颜色值，转为16进制 类似html16进制颜色表示形式
-     *
-     * @param colorValue
-     * @return
-     */
-    public static String convertToHtmlColor(int colorValue) {
-        // 将整数值转为16进制字符串
-        StringBuilder hexString = new StringBuilder(Integer.toHexString(colorValue));
 
-        // 补足到6位
-        while (hexString.length() < 6) {
-            hexString.insert(0, "0");
-        }
-
-        return "#" + hexString.toString().toUpperCase();
-    }
 
 }
