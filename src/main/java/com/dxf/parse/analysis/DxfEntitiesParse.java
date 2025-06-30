@@ -360,8 +360,16 @@ public class DxfEntitiesParse {
                     if (DecimalCheckUtil.check(str.trim())) {
                         vertex.setY(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
                     }
-                    vertices.add(vertex);
                 }
+                // 定制点：LWPolyline 的顶点理论上没有Z，但是为了适配geojson写过来的z值，这里做个解析适配
+                if (PolyLineEnum.COORDINATE_Z.getCode().equals(lineList.get(i + 1).trim())){
+                    ++i;
+                    str = lineList.get(++i).trim();
+                    if (DecimalCheckUtil.check(str.trim())) {
+                        vertex.setZ(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
+                    }
+                }
+                vertices.add(vertex);
             } else if (DxfEntitiesBaseEnum.ENTITY_FLAG.getCode().equals(str)) {
                 // 实体结束
                 break;

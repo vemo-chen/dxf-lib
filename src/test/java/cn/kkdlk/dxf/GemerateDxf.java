@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class GemerateDxf {
 
-    String url = "C:\\Users\\bayod\\Documents\\dxf\\writeTest1.dxf";
+    String url = "D:\\dxf\\0630\\pointLine.dxf";
 
     @Test
     public void testWrite() {
@@ -37,98 +37,98 @@ public class GemerateDxf {
 
         // 创建线段
         DxfLine dxfLine = new DxfLine();
-        dxfLine.setStartPoint(100, 400, 0);
-        dxfLine.setEndPoint(500, 400, 0);
+        dxfLine.setStartPoint(100, 400, 500);
+        dxfLine.setEndPoint(500, 450, 400);
         dxfLine.setColor(color);
         dxfLine.setAlpha(22);
         dxfLine.setLineWidth(LineWidthEnum.LW_13);
         dxfLine.setLayerName("ly2");
         dxfDocWriter.addEntity(dxfLine);
 
-        // 创建多段线实体
-        DxfLwPolyLine dxfLwPolyLine = new DxfLwPolyLine();
-        List<List<Double>> points = new ArrayList<>();
-        List<Double> point = new ArrayList<>();
-        double x = 100;
-        double y = 100;
-        double z = 100;
-        point.add(x);
-        point.add(y);
-        point.add(z);
-        points.add(point);
-
-        x = 300;
-        y = 100;
-        z = 1000;
-        point = new ArrayList<>();
-        point.add(x);
-        point.add(y);
-        point.add(z);
-        points.add(point);
-
-        x = 200;
-        y = 200;
-        z = 2500;
-        point = new ArrayList<>();
-        point.add(x);
-        point.add(y);
-        point.add(z);
-        points.add(point);
-        dxfLwPolyLine.addPoints(points);
-
-        dxfLwPolyLine.setHeight(100D);
-        dxfLwPolyLine.setColor(color);
-        dxfLwPolyLine.setClose(true);
-        dxfLwPolyLine.setAlpha(44);
-        dxfLwPolyLine.setSolid(true);
-        dxfLwPolyLine.setSolidColor(new Color(0, 255, 0));
-        dxfLwPolyLine.setSolidAlpha(55);
-        dxfLwPolyLine.setLayerName("ly1");
-        dxfLwPolyLine.setLineWidth(LineWidthEnum.LW_9);
-        dxfDocWriter.addEntity(dxfLwPolyLine);
-
-
-        // 创建多段线实体
-        DxfLwPolyLine dxfLwPolyLine2 = new DxfLwPolyLine();
-        List<List<Double>> points2 = new ArrayList<>();
-        List<Double> point2 = new ArrayList<>();
-        double x2 = 400;
-        double y2 = 100;
-        double z2 = 100;
-        point2.add(x2);
-        point2.add(y2);
-        point2.add(z2);
-        points2.add(point2);
-
-        x2 = 600;
-        y2 = 100;
-        z2 = 1000;
-        point2 = new ArrayList<>();
-        point2.add(x2);
-        point2.add(y2);
-        point2.add(z2);
-        points2.add(point2);
-
-        x2 = 500;
-        y2 = 200;
-        z2 = 2500;
-        point2 = new ArrayList<>();
-        point2.add(x2);
-        point2.add(y2);
-        point2.add(z2);
-        points2.add(point2);
-        dxfLwPolyLine2.addPoints(points2);
-
-        dxfLwPolyLine2.setHeight(100D);
-        dxfLwPolyLine2.setColor(color);
-        dxfLwPolyLine2.setClose(false);
-        dxfLwPolyLine2.setAlpha(44);
-        dxfLwPolyLine2.setSolid(false);
-        dxfLwPolyLine2.setSolidColor(new Color(0, 255, 0));
-        dxfLwPolyLine2.setSolidAlpha(55);
-        dxfLwPolyLine.setLayerName("ly1");
-        dxfLwPolyLine2.setLineWidth(LineWidthEnum.LW_9);
-        dxfDocWriter.addEntity(dxfLwPolyLine2);
+//        // 创建多段线实体
+//        DxfLwPolyLine dxfLwPolyLine = new DxfLwPolyLine();
+//        List<List<Double>> points = new ArrayList<>();
+//        List<Double> point = new ArrayList<>();
+//        double x = 100;
+//        double y = 100;
+//        double z = 100;
+//        point.add(x);
+//        point.add(y);
+//        point.add(z);
+//        points.add(point);
+//
+//        x = 300;
+//        y = 100;
+//        z = 1000;
+//        point = new ArrayList<>();
+//        point.add(x);
+//        point.add(y);
+//        point.add(z);
+//        points.add(point);
+//
+//        x = 200;
+//        y = 200;
+//        z = 2500;
+//        point = new ArrayList<>();
+//        point.add(x);
+//        point.add(y);
+//        point.add(z);
+//        points.add(point);
+//        dxfLwPolyLine.addPoints(points);
+//
+//        dxfLwPolyLine.setHeight(100D);
+//        dxfLwPolyLine.setColor(color);
+//        dxfLwPolyLine.setClose(true);
+//        dxfLwPolyLine.setAlpha(44);
+//        dxfLwPolyLine.setSolid(true);
+//        dxfLwPolyLine.setSolidColor(new Color(0, 255, 0));
+//        dxfLwPolyLine.setSolidAlpha(55);
+//        dxfLwPolyLine.setLayerName("ly1");
+//        dxfLwPolyLine.setLineWidth(LineWidthEnum.LW_9);
+//        dxfDocWriter.addEntity(dxfLwPolyLine);
+//
+//
+//        // 创建多段线实体
+//        DxfLwPolyLine dxfLwPolyLine2 = new DxfLwPolyLine();
+//        List<List<Double>> points2 = new ArrayList<>();
+//        List<Double> point2 = new ArrayList<>();
+//        double x2 = 400;
+//        double y2 = 100;
+//        double z2 = 100;
+//        point2.add(x2);
+//        point2.add(y2);
+//        point2.add(z2);
+//        points2.add(point2);
+//
+//        x2 = 600;
+//        y2 = 100;
+//        z2 = 1000;
+//        point2 = new ArrayList<>();
+//        point2.add(x2);
+//        point2.add(y2);
+//        point2.add(z2);
+//        points2.add(point2);
+//
+//        x2 = 500;
+//        y2 = 200;
+//        z2 = 2500;
+//        point2 = new ArrayList<>();
+//        point2.add(x2);
+//        point2.add(y2);
+//        point2.add(z2);
+//        points2.add(point2);
+//        dxfLwPolyLine2.addPoints(points2);
+//
+//        dxfLwPolyLine2.setHeight(100D);
+//        dxfLwPolyLine2.setColor(color);
+//        dxfLwPolyLine2.setClose(false);
+//        dxfLwPolyLine2.setAlpha(44);
+//        dxfLwPolyLine2.setSolid(false);
+//        dxfLwPolyLine2.setSolidColor(new Color(0, 255, 0));
+//        dxfLwPolyLine2.setSolidAlpha(55);
+//        dxfLwPolyLine.setLayerName("ly1");
+//        dxfLwPolyLine2.setLineWidth(LineWidthEnum.LW_9);
+//        dxfDocWriter.addEntity(dxfLwPolyLine2);
 
         dxfDocWriter.save(url, true);
     }
