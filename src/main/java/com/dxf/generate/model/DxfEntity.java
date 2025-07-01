@@ -48,11 +48,5 @@ public interface DxfEntity {
      */
     void setReactors(String reactors);
 
-    /**
-     * 获取图层名
-     *
-     * @return 图层名
-     */
-    String getLayerName();
 
 }

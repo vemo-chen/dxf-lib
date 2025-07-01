@@ -46,11 +46,5 @@ public class DxfHatch extends BaseDxfEntity {
         return "AcDbHatch";
     }
 
-    public enum HatchType {
-        /**
-         * Solid
-         */
-        SOLID;
-    }
 
 }

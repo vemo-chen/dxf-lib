@@ -18,8 +18,7 @@ public class ParseDxf {
     @Test
     public void parseDxfFile() {
         try {
-            DxfResolver build = ParseDXF.build("D:\\dxf\\dx\\cys2018.dxf");
-//            DxfResolver builtd = ParseDXF.build(new FileInputStream("E:\\test\\白马2000-3-108.dxf"));
+            DxfResolver build = ParseDXF.build("D:\\dxf\\dx\\polyline.dxf");
             Map<String, List<GeometricModel>> structureMap = build.getStructureMap();
             System.out.println(structureMap);
         } catch (IOException e) {

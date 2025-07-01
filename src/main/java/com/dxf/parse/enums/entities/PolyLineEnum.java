@@ -26,11 +26,6 @@ public enum PolyLineEnum {
     HATCH_NAME("HATCH", "填充名称"),
 
     /**
-     * 图层名称
-     */
-    LAYER_NAME("8", "图层名称"),
-
-    /**
      * x坐标
      */
     COORDINATE_X("10", "x坐标"),
@@ -65,7 +60,6 @@ public enum PolyLineEnum {
      * 顶点名称
      */
     VERTEX_NAME("VERTEX", "顶点名称"),
-
 
     /**
      * 多线段结束

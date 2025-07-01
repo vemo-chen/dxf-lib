@@ -17,10 +17,6 @@ public enum InsertEnum {
      */
     INSERT_NAME("INSERT", "插入图元"),
     /**
-     * 图层名称
-     */
-    LAYER_NAME("8", "图层名称"),
-    /**
      * x坐标
      */
     COORDINATE_X("10", "x坐标"),
@@ -35,10 +31,10 @@ public enum InsertEnum {
     /**
      * 组码
      */
-    private String code;
+    private final String code;
 
     /**
      * 组码名称
      */
-    private String fieldName;
+    private final String fieldName;
 }

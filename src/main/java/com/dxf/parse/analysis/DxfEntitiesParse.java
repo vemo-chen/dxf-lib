@@ -1,6 +1,5 @@
 package com.dxf.parse.analysis;
 
-import com.dxf.generate.utils.DxfUtil;
 import com.dxf.parse.constant.EntityNameConstant;
 import com.dxf.parse.constant.PolyLineConstant;
 import com.dxf.parse.enums.DxfEntitiesBaseEnum;
@@ -362,7 +361,7 @@ public class DxfEntitiesParse {
                     }
                 }
                 // 定制点：LWPolyline 的顶点理论上没有Z，但是为了适配geojson写过来的z值，这里做个解析适配
-                if (PolyLineEnum.COORDINATE_Z.getCode().equals(lineList.get(i + 1).trim())){
+                if (PolyLineEnum.COORDINATE_Z.getCode().equals(lineList.get(i + 1).trim())) {
                     ++i;
                     str = lineList.get(++i).trim();
                     if (DecimalCheckUtil.check(str.trim())) {
@@ -467,7 +466,7 @@ public class DxfEntitiesParse {
                 // 多段线闭合
                 str = lineList.get(++i).trim();
                 // 多段线的标志，表明这是一个闭合的多段线
-                if (str.equals(PolyLineConstant.POLYLINE_LOGIC_CLOSE) || str.equals(PolyLineConstant.POLYLINE_LOGIC_CLOSE_1)) {
+                if ((Integer.parseInt(str) & 1) == 1) {
                     polyLine.setLogicClose(true);
                 }
             } else if (PolyLineEnum.BLOCK.getCode().equals(str)) {
@@ -475,7 +474,7 @@ public class DxfEntitiesParse {
                 if (PolyLineEnum.VERTEX_NAME.getCode().equals(str)) {
                     GeometricVertex vertex = new GeometricVertex();
                     //顶点的x坐标
-                    while (true) {
+                    while (!PolyLineEnum.BLOCK.getCode().equals(lineList.get(i + 1).trim())) {
                         str = lineList.get(++i).trim();
                         if (PolyLineEnum.COORDINATE_X.getCode().equals(str)) {
                             str = lineList.get(++i).trim();
@@ -487,21 +486,17 @@ public class DxfEntitiesParse {
                             if (DecimalCheckUtil.check(str.trim())) {
                                 vertex.setY(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
                             }
-                            vertices.add(vertex);
                         } else if (PolyLineEnum.COORDINATE_Z.getCode().equals(str)) {
                             str = lineList.get(++i).trim();
                             if (DecimalCheckUtil.check(str.trim())) {
                                 vertex.setZ(new BigDecimal(str.trim()).setScale(DECIMAL_SIZE, RoundingMode.HALF_UP));
                             }
-                            vertices.add(vertex);
-                        } else if (PolyLineEnum.BLOCK.getCode().equals(str)) {
-                            break;
                         } else {
                             ++i;
                         }
                     }
                     vertices.add(vertex);
-                    --i;
+
                 } else if (PolyLineEnum.SEQEND.getCode().equals(str)) {
                     break;
                 }

@@ -13,11 +13,6 @@ public enum ArcEnum {
     ARC_NAME("ARC", "弧线名"),
 
     /**
-     * 图层名称
-     */
-    LAYER_NAME("8", "图层名称"),
-
-    /**
      * x坐标
      */
     COORDINATE_X("10", "x坐标"),
@@ -46,22 +41,16 @@ public enum ArcEnum {
      * 圆弧终止角度
      */
     ARC_END_ANGLE("51", "圆弧终止角度"),
-
-
-    /**
-     * 颜色
-     */
-    COLOR("62", "颜色");
-
+    ;
 
     /**
      * 组码
      */
-    private String code;
+    private final String code;
 
     /**
      * 组码名称
      */
-    private String fieldName;
+    private final String fieldName;
 
-}
+    }

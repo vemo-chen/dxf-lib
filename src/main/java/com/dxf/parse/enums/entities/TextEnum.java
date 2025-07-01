@@ -18,11 +18,6 @@ public enum TextEnum {
     TEXT_NAME("TEXT", "文本名称"),
 
     /**
-     * 颜色
-     */
-    COLOR("62", "颜色"),
-
-    /**
      * 文字高度
      */
     HEIGH("40", "文字高度"),
@@ -44,10 +39,6 @@ public enum TextEnum {
      */
     TEXT_CONTENT("1", "文本内容"),
     /**
-     * 图层名称
-     */
-    LAYER_NAME("8", "图层名称"),
-    /**
      * 中心点x坐标
      */
     COORDINATE_X("10", "中心点x坐标"),
@@ -62,10 +53,10 @@ public enum TextEnum {
     /**
      * 组码
      */
-    private String code;
+    private final String code;
 
     /**
      * 组码名称
      */
-    private String fieldName;
+    private final String fieldName;
 }

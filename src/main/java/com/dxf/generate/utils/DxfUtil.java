@@ -1,7 +1,5 @@
 package com.dxf.generate.utils;
 
-import com.dxf.generate.model.entities.Color;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Objects;
@@ -23,7 +21,7 @@ public class DxfUtil {
      * @return
      */
     public static String formatMeta(long meta) {
-        return StringUtil.appendStart('0', 3, Long.toHexString(meta)).toUpperCase();
+        return StringUtil.appendStart('0', 2, Long.toHexString(meta)).toUpperCase();
     }
 
     /**
@@ -49,8 +47,6 @@ public class DxfUtil {
         }
         return maxMeta;
     }
-
-
 
 
 }

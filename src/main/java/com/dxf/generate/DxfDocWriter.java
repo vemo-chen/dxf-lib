@@ -36,11 +36,11 @@ public class DxfDocWriter implements Closeable {
     /**
      * 当选择保存为dxf文件的时候，要保留的Entities类型的数组，不在数组中的对象将会被忽略掉（不包含自定义加入的图元）
      */
-    public static final String[] DEFAULT_ENTITY_NO_REDUCE_PART = {"LINE", "CIRCLE", "ARC", "TEXT", "MTEXT", "LWPOLYLINE"};
+    public static final String[] DEFAULT_ENTITY_NO_REDUCE_PART = {"LINE", "CIRCLE", "ARC", "TEXT", "MTEXT", "LWPOLYLINE", "POLYLINE"};
     /**
      * 空的DXF文件模板路径
      */
-    public static final String DEFAULT_EMPTY_DXF_PATH = "dxf/empty2018.dxf";
+    public static final String DEFAULT_EMPTY_DXF_PATH = "dxf/empty3d.dxf";
     private static final Logger log = Logger.getLogger(DxfDocWriter.class.getName());
     private List<String> entityNoReducePart = Arrays.asList(DEFAULT_ENTITY_NO_REDUCE_PART);
     private final List<DxfEntity> newDxfEntityList;
@@ -80,7 +80,7 @@ public class DxfDocWriter implements Closeable {
             }
             maxMeta = DxfUtil.readMaxMeta(dxfFilePath);
         } else {
-            maxMeta = Long.parseLong("2A4", 16);
+            maxMeta = Long.parseLong("2AC", 16);
         }
     }
 
@@ -99,30 +99,40 @@ public class DxfDocWriter implements Closeable {
      * @param dxfEntity 图元
      */
     public void addEntity(DxfEntity dxfEntity) {
-        if (dxfEntity instanceof DxfRay) {
-            if (Vector3.ZERO.equals(((DxfRay) dxfEntity).getDirection())) {
-                log.severe(dxfEntity.getEntityName() + " direction cant be zero!!, will ignore this entity");
-                return;
-            }
+        if (dxfEntity instanceof DxfRay && Vector3.ZERO.equals(((DxfRay) dxfEntity).getDirection())) {
+            log.severe(dxfEntity.getEntityName() + " direction cant be zero!!, will ignore this entity");
+            return;
         }
-        if (dxfEntity instanceof DxfLwPolyLine) {
-            if (((DxfLwPolyLine) dxfEntity).isEmpty()) {
-                log.warning("LwPolyLine not contains any point, will ignore this entity");
-                return;
-            }
+
+        if (dxfEntity instanceof DxfLwPolyLine && ((DxfLwPolyLine) dxfEntity).isEmpty()) {
+            log.warning("LwPolyLine not contains any point, will ignore this entity");
+            return;
+        }
+
+        if (dxfEntity instanceof DxfPolyLine && ((DxfPolyLine) dxfEntity).isEmpty()) {
+            log.warning("PolyLine not contains any point, will ignore this entity");
+            return;
         }
 
         if (dxfEntity.getMeta() == null) {
             dxfEntity.setMeta(++maxMeta);
         }
         this.newDxfEntityList.add(dxfEntity);
-        if (dxfEntity instanceof DxfCircle || dxfEntity instanceof DxfLwPolyLine) {
-            if (((BaseDxfEntity) dxfEntity).isSolid()) {
-                DxfHatch dxfHatch = DxfHatch.buildHatchBy((BaseDxfEntity) dxfEntity, ++maxMeta);
-                addEntity(dxfHatch);
-                dxfEntity.setReactors(DxfUtil.formatMeta(dxfHatch.getMeta()));
-            }
+
+        if ((dxfEntity instanceof DxfCircle || dxfEntity instanceof DxfLwPolyLine) && ((BaseDxfEntity) dxfEntity).isSolid()) {
+            DxfHatch dxfHatch = DxfHatch.buildHatchBy((BaseDxfEntity) dxfEntity, ++maxMeta);
+            addEntity(dxfHatch);
+            dxfEntity.setReactors(DxfUtil.formatMeta(dxfHatch.getMeta()));
         }
+
+        if ((dxfEntity instanceof DxfPolyLine)) {
+            // 提前跳过一位留给vertex结束后使用
+            ++maxMeta;
+            ((DxfPolyLine) dxfEntity).buildVertex((BaseDxfEntity) dxfEntity, ++maxMeta);
+            // meta 偏移 顶点数量
+            maxMeta += ((DxfPolyLine) dxfEntity).getPoints().size();
+        }
+
     }
 
     /**

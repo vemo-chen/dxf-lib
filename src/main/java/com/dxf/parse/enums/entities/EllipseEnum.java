@@ -13,11 +13,6 @@ public enum EllipseEnum {
     ELLIPSE_NAME("ELLIPSE", "椭圆名称"),
 
     /**
-     * 图层名称
-     */
-    LAYER_NAME("8", "图层名称"),
-
-    /**
      * 椭圆圆心X坐标
      */
     COORDINATES_X("10", "X坐标组码"),
@@ -66,12 +61,12 @@ public enum EllipseEnum {
     /**
      * 组码
      */
-    private String code;
+    private final String code;
 
     /**
      * 组码名称
      */
-    private String fieldName;
+    private final String fieldName;
 
 
 }
