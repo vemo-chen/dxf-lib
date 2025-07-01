@@ -1,7 +1,7 @@
 # DXF-LIB
 
 DXF解析参考资料：[DXF 格式 - 中文参考手册](https://documentation.help/AutoCAD-DXF-zh/WSfacf1429558a55de185c428100849a0ab7-5f35.htm)
-
+参考资料2：[AUTODESK-AUTOCAD-2018](https://help.autodesk.com/view/OARX/2018/CHS/?guid=GUID-7D07C886-FD1D-4A0C-A7AB-B4D21F18E484)
 
 ```xml
 
@@ -60,8 +60,7 @@ public class ParseDxf {
     @Test
     public void parseDxfFile() {
         try {
-            DxfResolver build = ParseDXF.build("E:\\test\\白马2000-3-108.dxf");
-            // DxfResolver builtd = ParseDXF.build(new FileInputStream("E:\\test\\白马2000-3-108.dxf"));
+            DxfResolver build = ParseDXF.build("D:\\dxf\\dx\\polyline.dxf");
             Map<String, List<GeometricModel>> structureMap = build.getStructureMap();
             System.out.println(structureMap);
         } catch (IOException e) {
@@ -71,11 +70,6 @@ public class ParseDxf {
 }
 ```
 
-该库内有一个DXF转KML的例子，可参考查看 [GenerateKml.java](src%2Fmain%2Fjava%2Fcn%2Fkkdlk%2Fgenerate%2Fkml%2FGenerateKml.java)
-
-
-
-
 
 ---
 
@@ -83,7 +77,7 @@ public class ParseDxf {
 
 dxf文件处理库，可以创建、加载dxf文件，并向其中添加新的图元。目前可以添加进去的图元有：
 
-Arc、Circle 、Line 、LwPolyLine 、Text 、Ellipse 、Ray 、XLine
+Arc、Circle 、Line 、LwPolyLine 、Text 、Ellipse 、Ray 、XLine、PolyLine
 
 
 ### 创建一个新的dxf文件
